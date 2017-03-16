@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/api.css">
+    <link rel="stylesheet" href="../../css/home.css">
+</head>
+<body>
+<header>
+2017 /03 /15
+</header>
+<script id="tpl3" type="text/x-dot-template">
+    {{ for(var key in it) { }}
+    <div class="box">
+        <img src="../../image/1.jpg" alt="">
+        <p>{{=it[key].date}} {{=it[key].id}}</p>
+    <div class="section">会傻逼uguanodiewdnkjlskjlahnanfi诶ekmjjgaioebiu二级女手机开恶化反监控
+        </div>
+        <p>《东京女子图鉴》</p>
+    <div class="change">
+        <span class="bianji">小记</span>
+        <span class="zan">45364</span>
+        <span class="share">分享</span>
+        </div>
+    </div>
+    {{  } }}
+</script>
+<div id="interpolation"></div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/doT.min.js"></script>
+<script>
+    apiready = function () {
+        api.ajax({
+            url: 'http://v3.wufazhuce.com:8000/api/onelist/idlist/?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android',
+            method: 'get',
+        }, function(ret, err) {
+            if (ret) {
+                var date=ret.data[0];
+                api.ajax({
+                    url: 'http://v3.wufazhuce.com:8000/api/onelist/'+date+'/0?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android',
+                    method: 'get',
+                }, function (ret, err) {
+                   data3= (ret.data.content_list);
+                   alert(data3);
+//                    var data3 = {"001":{name:"张三",age:"24",sex:"男"},"002":{name:"李四",age:"26",sex:"男"}};
+                    var interpolation = doT.template($api.dom('#tpl3').innerHTML);
+                    $api.dom('#interpolation').innerHTML = interpolation(data3);
+                });
+            }
+
+        });
+
+    }
+</script>
+</html>
