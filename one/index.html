@@ -1,0 +1,265 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>Hello APP</title>
+    <link rel="stylesheet" type="text/css" href="./css/api.css" />
+    <style type="text/css">
+    html,body{
+        height: 100%;
+    }
+    #wrap{
+        height: 100%;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-flex-flow: column;
+               flex-flow: column;
+    }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+    </div>
+</body>
+<script type="text/javascript" src="./script/api.js"></script>
+<script type="text/javascript">
+    apiready = function(){
+
+        var header = $api.byId('header');
+        //适配iOS 7+，Android 4.4+状态栏
+        $api.fixStatusBar(header);
+        api.openFrame({
+            name: 'home',
+            url: './html/main/home.html',
+            rect: {
+                x: 0,
+                y: 0,
+                w: api.winWidth,
+                h: api.winHeight-50
+            },
+            pageParam: {
+                name: 'test'
+            },
+            bounces: false,
+            bgColor: 'rgba(0,0,0,0)',
+            vScrollBarEnabled: true,
+            hScrollBarEnabled: true
+        });
+        api.openDrawerLayout({
+            name: 'index',
+            url:'index.html',
+            animation: {
+                type: 'none',
+                duration:300
+            },
+            leftPane: {
+                name: 'login',
+                edge:100,
+                url: './html/login/login.html'
+            }
+        });
+//        NVTaBar
+        var NVTabBar = api.require('NVTabBar');
+        NVTabBar.open({
+            styles: {
+                bg: '#fff',
+                h: 50,
+                    dividingLine: {
+                    width: 0.2,
+                    color: '#555'
+                },
+                badge: {
+                    bgColor: '#fff',
+                    numColor: '#8A8989',
+                    size: 6.0
+                }
+            },
+            items: [{
+                w: api.winWidth / 4.0,
+                bg: {
+                    marginB: 0,
+                    image: 'rgba(0,0,0,0)'
+                },
+                iconRect: {
+                    w: 30.0,
+                    h: 30.0,
+                },
+                icon: {
+                    normal: 'widget://res/NVTabBar/shouye1.png',
+                    highlight: 'widget://res/NVTabBar/shouye2.png',
+                    selected: 'widget://res/NVTabBar/shouye2.png'
+                },
+                title: {
+                    text: '首页',
+                    size: 12.0,
+                    normal: '#BCBBBA',
+                    selected: '#8A8989',
+                    marginB: 6.0
+                }
+            }, {
+                w: api.winWidth / 4.0,
+                bg: {
+                    marginB: 0,
+                    image: 'rgba(0,0,0,0)'
+                },
+                iconRect: {
+                    w: 25.0,
+                    h: 25.0,
+                },
+                icon: {
+                    normal: 'widget://res/NVTabBar/read1.png',
+                    highlight: 'widget://res/NVTabBar/read2.png',
+                    selected: 'widget://res/NVTabBar/read2.png'
+                },
+                title: {
+                    text: '阅读',
+                    size: 12.0,
+                    normal: '#BCBBBA',
+                    selected: '#8A8989',
+                    marginB: 6.0
+                }
+            }, {
+                w: api.winWidth / 4.0,
+                bg: {
+                    marginB: 0,
+                    image: 'rgba(0,0,0,0)'
+                },
+                iconRect: {
+                    w: 25.0,
+                    h: 25.0,
+                },
+                icon: {
+                    normal: 'widget://res/NVTabBar/music1.png',
+                    highlight: 'widget://res/NVTabBar/music2.png',
+                    selected: 'widget://res/NVTabBar/music2.png'
+                },
+                title: {
+                    text: '音乐',
+                    size: 12.0,
+                    normal: '#BCBBBA',
+                    selected: '#8A8989',
+                    marginB: 6.0
+                }
+            }, {
+                w: api.winWidth / 4.0,
+                bg: {
+                    marginB: 0,
+                    image: 'rgba(0,0,0,0)'
+                },
+                iconRect: {
+                    w: 25.0,
+                    h: 25.0,
+                },
+                icon: {
+                    normal: 'widget://res/NVTabBar/video1.png',
+                    highlight: 'widget://res/NVTabBar/video2.png',
+                    selected: 'widget://res/NVTabBar/video2.png'
+                },
+                title: {
+                    text: '影视',
+                    size: 12.0,
+                    normal: '#BCBBBA',
+                    selected: '#8A8989',
+                    marginB: 6.0
+                }
+            }],
+            selectedIndex: 0
+        }, function(ret, err) {
+            var rel=ret.index;
+            if(rel==0){
+                api.openFrame({
+                    name: 'home',
+                    url: './html/main/home.html',
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: api.winWidth,
+                        h: api.winHeight-50
+                    },
+                    pageParam: {
+                        name: 'test'
+                    },
+                    bounces: false,
+                    bgColor: 'rgba(0,0,0,0)',
+                    vScrollBarEnabled: true,
+                    hScrollBarEnabled: true
+                });
+            }else if(rel==1){
+                api.openFrame({
+                    name: 'home',
+                    url: './html/main/read.html',
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: api.winWidth,
+                        h: api.winHeight-50
+                    },
+                    pageParam: {
+                        name: 'test'
+                    },
+                    bounces: false,
+                    bgColor: 'rgba(0,0,0,0)',
+                    vScrollBarEnabled: true,
+                    hScrollBarEnabled: true
+                });
+            }else if(rel==2){
+                api.openFrame({
+                    name: 'home',
+                    url: './html/main/music.html',
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: api.winWidth,
+                        h: api.winHeight-50
+                    },
+                    pageParam: {
+                        name: 'test'
+                    },
+                    bounces: false,
+                    bgColor: 'rgba(0,0,0,0)',
+                    vScrollBarEnabled: true,
+                    hScrollBarEnabled: true
+                });
+            }else if(rel==3){
+                api.openFrame({
+                    name: 'home',
+                    url: './html/main/video.html',
+                    rect: {
+                        x: 0,
+                        y: 0,
+                        w: api.winWidth,
+                        h: api.winHeight-50
+                    },
+                    pageParam: {
+                        name: 'test'
+                    },
+                    bounces: false,
+                    bgColor: 'rgba(0,0,0,0)',
+                    vScrollBarEnabled: true,
+                    hScrollBarEnabled: true
+                });
+            }
+        });
+//        var headerPos = $api.offset(header);
+//        var main = $api.byId('main');
+//        var mainPos = $api.offset(main);
+//        api.openFrame({
+//            name: 'main',
+//            url: 'html/main.html',
+//            bounces: true,
+//            rect: {
+//                x: 0,
+//                y: headerPos.h,
+//                w: 'auto',
+//                h: mainPos.h
+//            }
+//        });
+
+
+    };
+</script>
+</html>

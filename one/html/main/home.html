@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/api.css">
+    <link rel="stylesheet" href="../../css/home.css">
+</head>
+<body>
+<header>
+2017 /03 /15
+</header>
+
+
+<script id="tpl2" type="text/x-dot-template">
+    <div class="box">
+        <img src={{=it.share_info.image}} alt="">
+        <p>{{=it.title}} {{=it.pic_info}}</p>
+        <div class="section">{{=it.forward}}
+        </div>
+        <p> {{=it.words_info}}</p>
+        <div class="change">
+            <span class="bianji">小记</span>
+            <span class="zan">{{=it.like_count}}</span>
+            <span class="share">分享</span>
+        </div>
+    </div>
+</script>
+<div id="interpolation2"></div>
+
+<script id="tpl3" type="text/x-dot-template">
+    {{ for(var key=1,  l = it.length; key < l; key++) { }}
+    <div class="box1">
+        <p><span>-</span>{{=it[key].share_list.wx.title.split("|")[0]}}<span>-</span></p>
+        <h1>{{=it[key].title}}</h1>
+        <h2>文 / {{=it[key].author.user_name}}</h2>
+        <img src={{=it[key].share_info.image}} alt="">
+         <div class="section">{{=it[key].forward}}</div>
+        <div class="change">
+            <span class="bianji">3小时前</span>
+            <span class="zan">{{=it[key].like_count}}</span>
+            <span class="share">分享</span>
+        </div>
+    </div>
+    {{  } }}
+</script>
+<div id="interpolation3"></div>
+</body>
+
+<script src="../../script/api.js"></script>
+<script src="../../script/doT.min.js"></script>
+
+<script>
+    apiready = function () {
+        api.ajax({
+            url: 'http://v3.wufazhuce.com:8000/api/onelist/idlist/?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android',
+            method: 'get',
+        }, function(ret, err) {
+            if (ret) {
+                var date=ret.data[0];
+                api.ajax({
+                    url: 'http://v3.wufazhuce.com:8000/api/onelist/'+date+'/0?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android',
+                    method: 'get',
+                }, function (ret, err) {
+                    data2=ret.data.content_list[0];
+                    data3= ret.data.content_list;
+                    var tpl2 = doT.template($api.dom('#tpl2').innerHTML);
+                    $api.dom('#interpolation2').innerHTML = tpl2(data2);
+                    var interpolation = doT.template($api.dom('#tpl3').innerHTML);
+                    $api.dom('#interpolation3').innerHTML = interpolation(data3);
+                });
+            }
+
+        });
+
+
+    }
+
+</script>
+</html>
