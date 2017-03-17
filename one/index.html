@@ -49,19 +49,6 @@
             vScrollBarEnabled: true,
             hScrollBarEnabled: true
         });
-        api.openDrawerLayout({
-            name: 'index',
-            url:'index.html',
-            animation: {
-                type: 'none',
-                duration:300
-            },
-            leftPane: {
-                name: 'login',
-                edge:100,
-                url: './html/login/login.html'
-            }
-        });
 //        NVTaBar
         var NVTabBar = api.require('NVTabBar');
         NVTabBar.open({
@@ -189,12 +176,12 @@
                     hScrollBarEnabled: true
                 });
             }else if(rel==1){
-                api.openFrame({
-                    name: 'home',
-                    url: './html/main/read.html',
-                    rect: {
-                        x: 0,
-                        y: 0,
+                    api.openFrame({
+                        name: 'home',
+                        url: './html/main/read.html',
+                        rect: {
+                            x: 0,
+                            y: 0,
                         w: api.winWidth,
                         h: api.winHeight-50
                     },

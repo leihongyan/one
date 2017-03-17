@@ -24,8 +24,10 @@
         <p> {{=it.words_info}}</p>
         <div class="change">
             <span class="bianji">小记</span>
-            <span class="zan">{{=it.like_count}}</span>
             <span class="share">分享</span>
+            <span class="zanimg" onclick="zan('{{=it.id}}')"></span>
+            <span class="zan">{{=it.like_count}}</span>
+
         </div>
     </div>
 </script>
@@ -33,16 +35,20 @@
 
 <script id="tpl3" type="text/x-dot-template">
     {{ for(var key=1,  l = it.length; key < l; key++) { }}
-    <div class="box1">
-        <p><span>-</span>{{=it[key].share_list.wx.title.split("|")[0]}}<span>-</span></p>
-        <h1>{{=it[key].title}}</h1>
-        <h2>文 / {{=it[key].author.user_name}}</h2>
-        <img src={{=it[key].share_info.image}} alt="">
-         <div class="section">{{=it[key].forward}}</div>
+    <div class="box1" >
+        <div onclick="openWin_detail('{{=it[key].item_id}}','{{=it[key].share_list.wx.title.split('|')[0]}}','{{=it[key].category}}')">
+            <p><span>-</span> {{=it[key].share_list.wx.title.split("|")[0]}}<span>-</span></p>
+            <h1>{{=it[key].title}}</h1>
+            <h2>文 / {{=it[key].author.user_name}}</h2>
+            <img src={{=it[key].share_info.image}} alt="">
+            <div class="section">{{=it[key].forward}}</div>
+        </div>
         <div class="change">
-            <span class="bianji">3小时前</span>
+            <span class="bianji">{{=it[key].post_date.split(" ")[1]}}更新</span>
+            <span class="share" onclick="openshare('{{=it[key].id}}')">分享</span>
+            <span class="dian">.</span>
+            <span class="zanimg" onclick="zan('{{=it[key].id}}')"></span>
             <span class="zan">{{=it[key].like_count}}</span>
-            <span class="share">分享</span>
         </div>
     </div>
     {{  } }}
@@ -54,6 +60,7 @@
 <script src="../../script/doT.min.js"></script>
 
 <script>
+    var openshare;var zan;
     apiready = function () {
         api.ajax({
             url: 'http://v3.wufazhuce.com:8000/api/onelist/idlist/?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android',
@@ -67,17 +74,66 @@
                 }, function (ret, err) {
                     data2=ret.data.content_list[0];
                     data3= ret.data.content_list;
+
                     var tpl2 = doT.template($api.dom('#tpl2').innerHTML);
                     $api.dom('#interpolation2').innerHTML = tpl2(data2);
                     var interpolation = doT.template($api.dom('#tpl3').innerHTML);
                     $api.dom('#interpolation3').innerHTML = interpolation(data3);
+
+                    openshare=function(id){
+                        api.openWin({
+                            name: 'share',
+                            url: '../share.html',
+                            pageParam: {
+                                id:id,date:date }
+                        });
+                    }
+                    var flag=[];
+                   for(var i in data3){
+                        flag[i]=true
+                   }
+                   zan=function(id){
+                        var eq;
+                        api.ajax({
+                            url:'http://v3.wufazhuce.com:8000/api/praise/add?channel=update&source_id='+id+'&source=summary&version=4.0.7&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android',
+                            method:'post',
+                            dataType:'json'
+                        },function(ret){
+                            for(var i in data3){
+                                if(id==data3[i].id){
+                                    eq=i
+                                }
+                            }
+                            var zz=$api.domAll(".zan")[eq];
+                            var num=parseInt($api.html(zz));
+                            var zanimg=$api.domAll(".zanimg")[eq];
+                            if(ret){
+                                if(flag[eq]){
+                                    $api.html(zz,num+1);
+                                    zanimg.style.background="url('../../image/zan1.png') top right no-repeat";
+                                    zanimg.style.backgroundSize="20px"
+                                    flag[eq]=false;
+                                }else if(!flag[eq]){
+                                    $api.html(zz,num-1);
+                                    zanimg.style.background="url('../../image/zan.png') top right no-repeat";
+                                    zanimg.style.backgroundSize="20px"
+                                    flag[eq]=true;
+                                }
+                            }
+                        })
+                    }
                 });
             }
 
         });
 
-
     }
-
+    function openWin_detail(item,title,category){
+        api.openWin({
+            name: 'detail1',
+            url: '../detail/detail1.html',
+            pageParam:{item:item,title:title,category:category}
+        });
+    }
 </script>
 </html>

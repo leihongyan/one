@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/api.css">
+    <link rel="stylesheet" href="../../css/detail1.css">
+</head>
+<body>
+    <div class="top">
+        <div class="return"></div>
+        <span class="title"></span>
+        <div class="share"></div>
+    </div>
+    <section>
+        <div class="biaoti">
+            <div class="border"></div>
+        </div>
+        <h4></h4>
+        <article>
+
+        </article>
+    </section>
+</body>
+<script src="../../script/api.js"></script>
+<script>
+    var itemid;var data;var url;
+    apiready = function () {
+        itemid=api.pageParam.item
+        title=api.pageParam.title
+        category=api.pageParam.category;
+        alert(category);
+        alert(itemid)
+        if(category==1){
+            url= 'http://v3.wufazhuce.com:8000/api/essay/'+itemid+'?channel=wdj&source=summary&source_id=9245&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android'
+        }else if(category==4){
+            url='http://v3.wufazhuce.com:8000/api/music/detail/'+itemid+'?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android'
+        }else if(category==5){
+            url='http://v3.wufazhuce.com:8000/api/movie/'+itemid+'/story/1/0?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android'
+        }
+        api.ajax({
+            url: url,
+            method: 'get',
+        }, function (ret) {
+            data=ret.data;
+            var tit=$api.dom(".title");
+            var bt=$api.dom(".biaoti");
+            var h4title=$api.dom("h4");
+            var arc=$api.dom("article");
+            tit.innerHTML=title;
+            if(category==1){
+                bt.innerHTML=data.hp_title;
+                h4title.innerHTML="文 / "+data.hp_author
+                arc.innerHTML=data.hp_content
+            }else if(category==4){
+                bt.innerHTML=data.story_title;
+                h4title.innerHTML="文 / "+data.story_author.user_name
+                arc.innerHTML=data.story
+            }else if(category==5){
+                alert(JSON.stringify(data));
+                arc.innerHTML=data.data[0].content
+                bt.innerHTML=data.data[0].title;
+                h4title.innerHTML="文 / "+data.data[0].author_list.user_name
+
+            }
+
+        });
+    }
+
+</script>
+</html>

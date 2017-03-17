@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/api.css">
+    <style>
+        body,html{
+            height:100%;
+        }
+        .box{
+            width:100%;
+            height:100%;
+            overflow: hidden;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-flex-direction: column;
+            flex-direction: column;
+            justify-content: center;
+            align-items:center;
+        }
+        .box .boxlist{
+            width:100%;
+            text-align: center;
+            line-height: 100px;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: flex;
+            justify-content: center;
+            align-items:center;
+            margin:40px 0;
+        }
+        .box img{
+            width:40px;
+            display: block;
+            height:40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="boxlist" onclick="shareqq()">
+            <img src="../image/qq.png">
+        </div>
+        <div class="boxlist" onclick="sharewx()">
+            <img src="../image/weixin.png">
+        </div>
+        <div class="boxlist" onclick="sharewb()">
+            <img src="../image/weibo.png">
+        </div>
+    </div>
+</body>
+<script src="../script/api.js"></script>
+<script>
+    var id;var wx;var qq;var date;var weibo;
+    var data2;
+    apiready = function () {
+        id= api.pageParam.id;
+        date= api.pageParam.date;
+        api.ajax({
+            url: 'http://v3.wufazhuce.com:8000/api/onelist/'+date+'/0?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android',
+            method: 'get',
+        }, function (ret, err) {
+            var data=ret.data;
+            var data1=data.content_list;
+            for(var i in data1){
+                if(data1[i].id==id){
+                    data2=data1[i];
+                }
+            }
+        });
+        wx = api.require('wx');
+        qq = api.require('qq');
+        weibo = api.require('weibo');
+    }
+    function sharewx(){
+        wx.shareText({
+            apiKey: '',
+            scene: 'timeline',
+            text: data2.share_list.wx.desc
+        }, function(ret, err) {
+            if (ret.status) {
+                alert('分享成功');
+            }
+        });
+    }
+    function shareqq(){
+        qq.shareNews({
+            url: data2.share_list.qq.link,
+            title:data2.share_list.qq.title,
+            description: data2.share_list.qq.desc,
+            imgUrl: data2.share_list.qq.imgUrl
+        });
+    }
+    function sharewb(){
+        weibo.shareText({
+            text: data2.share_list.weibo.title,
+        }, function(ret) {
+            if (ret.status) {
+                alert('分享文本内容成功');
+            }
+        });
+    }
+
+//    openframe=function(){
+//        api.openWin({
+//            name: 'share',
+//            url:link,
+//            rect: {
+//                x: 0,
+//                y: 0,
+//                w: 'auto',
+//                h:' auto'
+//            },
+//            bounces: true
+//        });
+//    }
+
+</script>
+</html>

@@ -50,13 +50,31 @@ header {
   width: 100px;
   float: left;
 }
-.change .zan {
-  width: 100px;
+.change .zanimg {
+  width: 30px;
+  height: 18px;
+  background: url("../image/zan.png") top right no-repeat;
+  background-size: 20px;
   float: right;
+  margin-top: -2px;
+}
+.change .zan {
+  width: 20px;
+  float: right;
+  display: block;
+}
+.change .dian {
+  width: 5px;
+  line-height: 8px;
+  color: #ccc;
+  margin: 0 5px;
+  float: right;
+  text-align: center;
 }
 .change .share {
-  width: 100px;
+  width: 30px;
   float: right;
+  display: block;
 }
 .box1 {
   width: 100%;
@@ -93,4 +111,7 @@ header {
   height: 200px;
   display: block;
   box-sizing: border-box;
+}
+.box1 a {
+  color: #ccc;
 }
