@@ -1,0 +1,108 @@
+html,body{
+    height: 100%;
+    width:100%;
+}
+#wrap{
+    height: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    -webkit-box-orient: vertical;
+    -webkit-flex-flow: column;
+}
+
+#header{
+    height:50px;
+    background-color: #000;
+    width: 100%;
+    display: -webkit-box;
+    display: -webkit-flex;
+    -webkit-box-orient:horizontal;
+    -webkit-flex-flow: row;    
+    position:fixed;
+    left: 0;
+    top:0;
+}
+
+
+#header .left .back{
+    position: absolute;left:10px;bottom:6px;display:inline-block;width:40px;
+    height:40px;background:url(http://7xkg7s.com1.z0.glb.clouddn.com/apicloud/be76e9ff4ca4672528d6275e7c192b7c.png) no-repeat center;
+    -webkit-background-size: contain;
+    background-size:contain;
+}
+    
+#header .center{
+    -webkit-box-flex: 1; 
+    -webkit-flex: 1;
+    text-align: center;
+}
+
+#header .center span{
+    text-align: center;
+    color: #fff;
+    font-size: 20px;
+    font-weight:bold;
+    line-height: 50px;  
+}
+
+#header .right img{
+    width:40px;
+    height:40px;
+    border-radius:20px;
+}
+
+#main{
+    margin-top:70px;
+    margin-left:5px;
+    margin-right:5px;
+    -webkit-box-flex: 1; 
+    -webkit-flex: 1;
+}
+.input-wrap{
+    padding: 20px 10px; position: relative;
+}
+.txt{
+    border: 1px solid #e6e6e6; border-radius: 6px; padding: 10px;
+    width: 100%; outline: none;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.light{
+    border-color: #55abce;
+}
+.del{
+    display: inline-block; background: #e6e6e6 url(../image/del.png) no-repeat center;
+    width: 18px; height: 18px; position: absolute; right:20px; top: 30px;
+    border-radius: 18px; 
+    -webkit-background-size: 10px 10px;
+    background-size: 10px 10px;
+    visibility: hidden;
+}
+.show{
+    visibility:visible;
+}
+         #loginTip{
+            text-align: center;
+
+         }
+         #loginTip a{
+            line-height: 40px;
+            text-decoration: underline;
+            color: #bfbfbf;
+            font-size: 1.2em;
+            font-family: '微软雅黑';
+         }
+         
+     .loginBtn{
+        width:100%;
+        padding: 10px;
+        text-align:center;
+     }
+     
+     .btn{
+        padding: 10px 30px;
+        font-size:16px;
+        border: 1px solid #000000;
+        -webkit-border-radius: 15px; 
+        border-radius:15px;    
+     }

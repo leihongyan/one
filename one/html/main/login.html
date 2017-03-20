@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/api.css">
+    <link rel="stylesheet" href="../../css/home.css">
+    <link rel="stylesheet" href="../../css/sign.css">
+</head>
+<body>
+<div id="wrap">
+         <div id="header">
+            <div class="left">
+                <a class="back" tapmode="" onclick="api.closeWin()"></a>
+            </div>
+        <div class="center"><span id="headerTitle">注册</span></div>
+           <div class="right"></div>
+        </div>
+        <div id="main">
+            <div class="input-wrap">
+                <input type="text" placeholder="请输入用户名" onfocus="edit(this)"  onblur="cancel(this)"  id="username" class="txt" value="" />
+                <i class="del" tapmode="" onclick="delWord(this)"></i>
+            </div>
+            <div class="input-wrap">
+                <input type="password" placeholder="请输入密码" onfocus="edit(this)" onblur="cancel(this)" id="userPwd" class="txt" value="" />
+                <i class="del" tapmode="" onclick="delWord(this)"></i>
+            </div>
+            <div class="input-wrap">
+                <input type="password" placeholder="请再次输入密码" onfocus="edit(this)" onblur="cancel(this)" id="userPwd2" class="txt" value="" />
+                <i class="del" tapmode="" onclick="delWord(this)"></i>
+            </div>
+            <div class="input-wrap">
+                <input type="email" placeholder="请输入邮箱" onfocus="edit(this)"  onblur="cancel(this)" id="email" class="txt" value="" />
+                <i class="del" tapmode="" onclick="delWord(this)"></i>
+            </div>
+            
+            <div class="loginBtn">
+                <a class="btn" tapmode="active" onclick="ensure()">注册</a>
+            </div>
+ </div>
+
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/doT.min.js"></script>
+<script src="../../script/login.js">
+</script>
+<script src="../../script/common.js"></script>
+</html>

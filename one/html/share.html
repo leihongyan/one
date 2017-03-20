@@ -35,7 +35,6 @@
             margin:40px 0;
         }
         .box img{
-            width:40px;
             display: block;
             height:40px;
         }
@@ -56,69 +55,74 @@
 </body>
 <script src="../script/api.js"></script>
 <script>
-    var id;var wx;var qq;var date;var weibo;
+    var id;var wx;var qq;var weibo; var date;
     var data2;
     apiready = function () {
-        id= api.pageParam.id;
-        date= api.pageParam.date;
-        api.ajax({
-            url: 'http://v3.wufazhuce.com:8000/api/onelist/'+date+'/0?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android',
-            method: 'get',
-        }, function (ret, err) {
-            var data=ret.data;
-            var data1=data.content_list;
-            for(var i in data1){
-                if(data1[i].id==id){
-                    data2=data1[i];
-                }
-            }
-        });
         wx = api.require('wx');
         qq = api.require('qq');
         weibo = api.require('weibo');
-    }
-    function sharewx(){
-        wx.shareText({
-            apiKey: '',
-            scene: 'timeline',
-            text: data2.share_list.wx.desc
-        }, function(ret, err) {
-            if (ret.status) {
-                alert('分享成功');
+        id= api.pageParam.id;
+        type=api.pageParam.type;
+        api.ajax({
+            url:'http://v3.wufazhuce.com:8000/api/onelist/idlist/?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android',
+            method:'get'
+        },function(ret){
+            date=ret.data[0];
+            if(type=="home"){
+                url='http://v3.wufazhuce.com:8000/api/onelist/'+date+'/0?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android'
+            }else if(type=="read"){
+                url='http://v3.wufazhuce.com:8000/api/channel/reading/more/0?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android'
+            }else if(type=='music'){
+                url='http://v3.wufazhuce.com:8000/api/channel/music/more/0?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android'
+            }else if(type=='video'){
+                url='http://v3.wufazhuce.com:8000/api/channel/movie/more/0?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android'
             }
-        });
-    }
-    function shareqq(){
-        qq.shareNews({
-            url: data2.share_list.qq.link,
-            title:data2.share_list.qq.title,
-            description: data2.share_list.qq.desc,
-            imgUrl: data2.share_list.qq.imgUrl
-        });
-    }
-    function sharewb(){
-        weibo.shareText({
-            text: data2.share_list.weibo.title,
-        }, function(ret) {
-            if (ret.status) {
-                alert('分享文本内容成功');
-            }
-        });
-    }
+            api.ajax({
+                url: url,
+                method: 'get',
+            }, function (ret) {
+                var data=ret.data;
+                if(type=="home"){
+                    var data1=data.content_list;
+                }else{
+                    var data1=data
+                }
 
-//    openframe=function(){
-//        api.openWin({
-//            name: 'share',
-//            url:link,
-//            rect: {
-//                x: 0,
-//                y: 0,
-//                w: 'auto',
-//                h:' auto'
-//            },
-//            bounces: true
-//        });
-//    }
-
+                for(var i in data1){
+                    if(data1[i].id==id){
+                        data2=data1[i];
+                    }
+                }
+                sharewx=function(){
+                    wx.shareText({
+                        apiKey: '',
+                        scene: 'timeline',
+                        text: data2.share_list.wx.desc
+                    }, function(ret, err) {
+                        if (ret.status) {
+                            alert('分享成功');
+                        }
+                    });
+                }
+                shareqq=function(){
+                    qq.shareNews({
+                        url: data2.share_list.qq.link,
+                        title:data2.share_list.qq.title,
+                        description: data2.share_list.qq.desc,
+                        imgUrl: data2.share_list.qq.imgUrl
+                    });
+                }
+                sharewb=function (){
+                    weibo.shareText({
+                        text: data2.share_list.weibo.title,
+                    }, function(ret) {
+                        if (ret.status) {
+                            alert('分享文本内容成功');
+                        }
+                    });
+                }
+            });
+        })
+    }
 </script>
 </html>

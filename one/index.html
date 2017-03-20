@@ -32,23 +32,7 @@
         var header = $api.byId('header');
         //适配iOS 7+，Android 4.4+状态栏
         $api.fixStatusBar(header);
-        api.openFrame({
-            name: 'home',
-            url: './html/main/home.html',
-            rect: {
-                x: 0,
-                y: 0,
-                w: api.winWidth,
-                h: api.winHeight-50
-            },
-            pageParam: {
-                name: 'test'
-            },
-            bounces: false,
-            bgColor: 'rgba(0,0,0,0)',
-            vScrollBarEnabled: true,
-            hScrollBarEnabled: true
-        });
+
 //        NVTaBar
         var NVTabBar = api.require('NVTabBar');
         NVTabBar.open({
@@ -157,7 +141,7 @@
             selectedIndex: 0
         }, function(ret, err) {
             var rel=ret.index;
-            if(rel==0){
+            if(rel==0||ret.eventType=='show'){
                 api.openFrame({
                     name: 'home',
                     url: './html/main/home.html',
@@ -177,7 +161,7 @@
                 });
             }else if(rel==1){
                     api.openFrame({
-                        name: 'home',
+                        name: 'read',
                         url: './html/main/read.html',
                         rect: {
                             x: 0,
@@ -195,7 +179,7 @@
                 });
             }else if(rel==2){
                 api.openFrame({
-                    name: 'home',
+                    name: 'music',
                     url: './html/main/music.html',
                     rect: {
                         x: 0,
@@ -213,7 +197,7 @@
                 });
             }else if(rel==3){
                 api.openFrame({
-                    name: 'home',
+                    name: 'video',
                     url: './html/main/video.html',
                     rect: {
                         x: 0,
@@ -231,20 +215,7 @@
                 });
             }
         });
-//        var headerPos = $api.offset(header);
-//        var main = $api.byId('main');
-//        var mainPos = $api.offset(main);
-//        api.openFrame({
-//            name: 'main',
-//            url: 'html/main.html',
-//            bounces: true,
-//            rect: {
-//                x: 0,
-//                y: headerPos.h,
-//                w: 'auto',
-//                h: mainPos.h
-//            }
-//        });
+
 
 
     };

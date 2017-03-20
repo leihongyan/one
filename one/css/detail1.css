@@ -18,7 +18,8 @@
 .top .return {
   width: 25px;
   height: 25px;
-  background: url("../image/return.png") center center no-repeat / contain;
+  background: url("../image/return.png") center center no-repeat;
+  background-size: 25px;
 }
 .top span {
   font-size: 16px;
@@ -29,7 +30,8 @@
 .top .share {
   width: 30px;
   height: 30px;
-  background: url("../image/share.png") center center no-repeat / contain;
+  background: url("../image/share.png") center center no-repeat;
+  background-size: 25px;
 }
 section {
   width: 100%;
@@ -54,16 +56,15 @@ section h4 {
   color: #555;
   font-weight: normal;
 }
-section img {
-  width: 100%;
-  padding: 15px;
-  box-sizing: border-box;
-  overflow: hidden;
-}
 section article {
+  width: 100%;
   line-height: 26px;
   font-size: 14px;
   color: #555;
+  height: auto;
+  overflow: hidden;
+  padding: 10px 20px 10px;
+  box-sizing: border-box;
 }
 section strong {
   font-size: 16px;

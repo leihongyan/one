@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../css/api.css">
+    <link rel="stylesheet" href="../../css/home.css">
+    <link rel="stylesheet" href="../../css/sign.css">
+</head>
+<body>
+<div id="wrap">
+        <div id="header">
+            <div class="left">
+                <a class="back" tapmode="" onclick="api.closeWin()"></a>
+            </div>
+            <div class="center"><span id="headerTitle">登录</span></div>
+            <div class="right"></div>
+        </div>
+        <div id="main">
+            <div class="input-wrap">
+                <input type="text" placeholder="用户名" onfocus="edit(this)" onblur="cancel(this)" class="txt" id="username" value="" />
+                <i class="del" tapmode="" onclick="delWord(this)"></i>
+            </div>
+            <div class="input-wrap">
+                <input type="password" placeholder="密码" onfocus="edit(this)" onblur="cancel(this)" class="txt" id="password" value="" />
+                <i class="del" tapmode="" onclick="delWord(this)"></i>
+            </div>
+            <div class="loginBtn">
+                <a class="btn" style="margin-top:30px;" tapmode="active" onclick="ensure()">登录</a>
+            </div>
+            <div id="loginTip">
+                <a tapmode="" onclick="login();">还没账号？戳这里进行注册</a>
+            </div>
+        </div>
+ </div>
+
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/common.js"></script>
+<script src="../../script/doT.min.js"></script>
+<script src="../../script/sign.js"></script>
+</html>

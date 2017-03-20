@@ -9,22 +9,35 @@
     <link rel="stylesheet" href="../../css/api.css">
     <link rel="stylesheet" href="../../css/home.css">
 </head>
+<style>
+    .login{
+       position:fixed;
+        width:60px;
+        height:50px;
+        line-height: 50px;
+        text-align: center;
+        color:#aaa;
+        font-size:20px;
+        top:0;
+        left:0;
+        z-index:1001;
+    }
+</style>
 <body>
+<div class="login" onclick="sign()">登录</div>
 <header>
-2017 /03 /15
+
 </header>
 
 
 <script id="tpl2" type="text/x-dot-template">
-    <div class="box">
+    <div class="box" style="margin-top:50px;">
         <img src={{=it.share_info.image}} alt="">
         <p>{{=it.title}} {{=it.pic_info}}</p>
         <div class="section">{{=it.forward}}
         </div>
         <p> {{=it.words_info}}</p>
         <div class="change">
-            <span class="bianji">小记</span>
-            <span class="share">分享</span>
             <span class="zanimg" onclick="zan('{{=it.id}}')"></span>
             <span class="zan">{{=it.like_count}}</span>
 
@@ -36,7 +49,7 @@
 <script id="tpl3" type="text/x-dot-template">
     {{ for(var key=1,  l = it.length; key < l; key++) { }}
     <div class="box1" >
-        <div onclick="openWin_detail('{{=it[key].item_id}}','{{=it[key].share_list.wx.title.split('|')[0]}}','{{=it[key].category}}')">
+        <div onclick="openWin_detail('{{=it[key].share_info.url}}')">
             <p><span>-</span> {{=it[key].share_list.wx.title.split("|")[0]}}<span>-</span></p>
             <h1>{{=it[key].title}}</h1>
             <h2>文 / {{=it[key].author.user_name}}</h2>
@@ -58,36 +71,33 @@
 
 <script src="../../script/api.js"></script>
 <script src="../../script/doT.min.js"></script>
+<script src="../../script/common.js"></script>
 
 <script>
-    var openshare;var zan;
+    var openshare;var zan;var openWin_detail;var data2;var data3;
     apiready = function () {
+
+ 
         api.ajax({
             url: 'http://v3.wufazhuce.com:8000/api/onelist/idlist/?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android',
             method: 'get',
-        }, function(ret, err) {
+        }, function(ret) {
             if (ret) {
                 var date=ret.data[0];
                 api.ajax({
                     url: 'http://v3.wufazhuce.com:8000/api/onelist/'+date+'/0?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android',
                     method: 'get',
-                }, function (ret, err) {
+                }, function (ret) {
                     data2=ret.data.content_list[0];
                     data3= ret.data.content_list;
-
+                    var header=$api.dom("header");
+                    header.innerHTML=ret.data.weather.date;
                     var tpl2 = doT.template($api.dom('#tpl2').innerHTML);
                     $api.dom('#interpolation2').innerHTML = tpl2(data2);
                     var interpolation = doT.template($api.dom('#tpl3').innerHTML);
                     $api.dom('#interpolation3').innerHTML = interpolation(data3);
 
-                    openshare=function(id){
-                        api.openWin({
-                            name: 'share',
-                            url: '../share.html',
-                            pageParam: {
-                                id:id,date:date }
-                        });
-                    }
+                   
                     var flag=[];
                    for(var i in data3){
                         flag[i]=true
@@ -122,18 +132,33 @@
                             }
                         })
                     }
+
                 });
             }
 
         });
 
     }
-    function openWin_detail(item,title,category){
+    function openWin_detail(url){
         api.openWin({
-            name: 'detail1',
-            url: '../detail/detail1.html',
-            pageParam:{item:item,title:title,category:category}
+            name: 'home',
+            url: url
         });
     }
+    function openshare (id){
+        api.openWin({
+            name: 'share',
+            url: '../share.html',
+            pageParam: {
+                id:id,type:'home' }
+        });
+    }
+    function sign(){
+        api.openWin({
+            name:'sign',
+            url:'sign.html'
+        })
+    }
+
 </script>
 </html>
