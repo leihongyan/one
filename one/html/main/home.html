@@ -14,22 +14,49 @@
        position:fixed;
         width:60px;
         height:50px;
-        line-height: 50px;
-        text-align: center;
         color:#aaa;
         font-size:20px;
         top:0;
         left:0;
         z-index:1001;
     }
+    .loginimg{
+        width:30px;
+        height:30px;
+        background: url('http://7xkg7s.com1.z0.glb.clouddn.com/apicloud/75635aa0b2ddfe0bb07c53a9bc050845.png') center center no-repeat;
+        background-size: 30px;
+        border-radius: 50%;
+        margin:10px;
+        border:1px solid #ccc;
+    }
+   /* .list{
+        position:fixed;
+        top:40px;
+        left:40px;
+        width:70px;
+        height:60px;
+        border-radius:5px;
+        border:1px solid #ccc;
+        font-size:14px;
+        display: none;
+        background:#eee;
+        text-align:center;
+        z-index: 1000;
+    }
+    .list li{
+        width:100%;
+        height:30px;
+        line-height: 30px;
+        text-align: center;
+        color:#555;
+    }*/
 </style>
 <body>
-<div class="login" onclick="sign()">登录</div>
+<div class="login" onclick="sign()">
+   <div class="loginimg"></div>
+</div>
 <header>
-
 </header>
-
-
 <script id="tpl2" type="text/x-dot-template">
     <div class="box" style="margin-top:50px;">
         <img src={{=it.share_info.image}} alt="">
@@ -40,7 +67,6 @@
         <div class="change">
             <span class="zanimg" onclick="zan('{{=it.id}}')"></span>
             <span class="zan">{{=it.like_count}}</span>
-
         </div>
     </div>
 </script>
@@ -72,12 +98,12 @@
 <script src="../../script/api.js"></script>
 <script src="../../script/doT.min.js"></script>
 <script src="../../script/common.js"></script>
+<script src="../../script/longtap.js"></script>
 
 <script>
     var openshare;var zan;var openWin_detail;var data2;var data3;
     apiready = function () {
-
- 
+        $api.setStorage('userid'," ");
         api.ajax({
             url: 'http://v3.wufazhuce.com:8000/api/onelist/idlist/?channel=wdj&version=4.0.2&uuid=ffffffff-a90e-706a-63f7-ccf973aae5ee&platform=android',
             method: 'get',
@@ -153,11 +179,58 @@
                 id:id,type:'home' }
         });
     }
+    var loginimg=$api.dom(".loginimg");
+    var login=$api.dom(".login");
     function sign(){
-        api.openWin({
-            name:'sign',
-            url:'sign.html'
-        })
+        //设置进入用户界面
+        //用户如果是登录状态
+        var uid=$api.getStorage('uid');var img='http://7xkg7s.com1.z0.glb.clouddn.com/apicloud/75635aa0b2ddfe0bb07c53a9bc050845.png';
+        alert(uid);
+        if(uid!='undefined'){
+            loginUlr="/user/"+uid;
+
+             on(login,'longTap',function(){
+                  api.actionSheet({
+                    buttons: ['换头像', '退出登录']
+                }, function(ret, err) {
+                    var index = ret.buttonIndex;
+                    if(index==1){
+                         api.getPicture({
+                            mediaValue: 'pic',
+                            destinationType: 'url',
+                        allowEdit: true,
+                         quality: 50,
+                            saveToPhotoAlbum: true
+                        }, function(ret, err) {
+                            if (ret) {
+                            var img=ret.data;
+                            alert(img);
+                            if(img==""){
+                                loginimg.style.background="url('http://7xkg7s.com1.z0.glb.clouddn.com/apicloud/75635aa0b2ddfe0bb07c53a9bc050845.png') center center no-repeat";
+                            }
+                            loginimg.style.background="url("+img+") center center no-repeat";
+                            loginimg.style.backgroundSize="30px";
+                            var cc={'img':img}
+                            ajaxRequest(loginUlr, 'put',cc, function (ret) {
+                            })
+                        }
+                        });
+                    }else if(index==2){
+                          api.openWin({
+                                 name: 'sign',
+                                 url: './sign.html',
+                           });
+                    }
+                });
+             })
+        }else{
+            loginimg.style.background="url("+img+") center center no-repeat";
+            loginimg.style.backgroundSize="30px";
+            api.openWin({
+                      name: 'sign',
+                      url: 'sign.html'
+                  });       
+        }
     }
 
 </script>

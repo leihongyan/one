@@ -29,6 +29,7 @@
 	<permission name="internet" />
 	<permission name="bootCompleted" />
 	<permission name="hardware" />
+	<permission name="contact" />
 	<feature name="wx">
 		<param name="urlScheme" value="wxd0d84bbf23b4a0e4"/>
 		<param name="apiKey" value="wxd0d84bbf23b4a0e4"/>
@@ -43,4 +44,5 @@
 		<param name="urlScheme" value="tencent101064640" />
 		<param name="apiKey" value="101064640" />
 	</feature>
+	<feature name="personalCenter"/>
 </widget>

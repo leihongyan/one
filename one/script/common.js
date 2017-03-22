@@ -54,68 +54,68 @@ function addData(data, str) {
 }
 
 //favorite
-function collect(el, type) {
-    var uid = $api.getStorage('userid');
-    //login
-    if (!uid) {
-        api.openWin({
-            name: 'userLogin',
-            url: './userLogin.html',
-            opaque: true,
-            vScrollBarEnabled: false
-        });
-        return;
-    }
-
-    //news id, activity id, merchant id
-    var thisId = $api.attr(el, 'news-id') || $api.attr(el, 'act-id') || $api.attr(el, 'mer-id');
-
-    var userFavUrl = '/user/' + uid + '/' + type;
-    var bodyParam = {};
-    switch (type) {
-        case 'act_fav':
-            bodyParam['activity'] = thisId;
-            break;
-        case 'news_fav':
-            bodyParam['news'] = thisId;
-            break;
-        case 'mer_fav':
-            bodyParam['merchant'] = thisId;
-            break;
-    }
-    ajaxRequest(userFavUrl, 'post', JSON.stringify(bodyParam), function (ret, err) {
-        if (ret) {
-            $api.html(el, "已收藏");
-            $(el).off('click').on('click', function () {
-                uncollect(type, ret.id, this);
-            })
-        } else {
-            api.toast({
-                msg: '收藏失败'
-            })
-        }
-    })
-}
-function uncollect(_class, id, el) {
-    try {
-        var deleteAct_favById = '/' + _class + '/' + id;
-        ajaxRequest(deleteAct_favById, 'delete', '', function (ret, err) {
-            if (ret) {
-                $api.html(el, "收藏");
-                $(el).off('click').on('click', function () {
-                    collect(this, _class);
-                })
-            } else {
-                api.toast({
-                    msg: '操作失败'
-                })
-            }
-        })
-    } catch (e) {
-        alert(e)
-    }
-
-}
+// function collect(el, type) {
+//     var uid = $api.getStorage('userid');
+//     //login
+//     if (!uid) {
+//         api.openWin({
+//             name: 'userLogin',
+//             url: './userLogin.html',
+//             opaque: true,
+//             vScrollBarEnabled: false
+//         });
+//         return;
+//     }
+//
+//     //news id, activity id, merchant id
+//     var thisId = $api.attr(el, 'news-id') || $api.attr(el, 'act-id') || $api.attr(el, 'mer-id');
+//
+//     var userFavUrl = '/user/' + uid + '/' + type;
+//     var bodyParam = {};
+//     switch (type) {
+//         case 'act_fav':
+//             bodyParam['activity'] = thisId;
+//             break;
+//         case 'news_fav':
+//             bodyParam['news'] = thisId;
+//             break;
+//         case 'mer_fav':
+//             bodyParam['merchant'] = thisId;
+//             break;
+//     }
+//     ajaxRequest(userFavUrl, 'post', JSON.stringify(bodyParam), function (ret, err) {
+//         if (ret) {
+//             $api.html(el, "已收藏");
+//             $(el).off('click').on('click', function () {
+//                 uncollect(type, ret.id, this);
+//             })
+//         } else {
+//             api.toast({
+//                 msg: '收藏失败'
+//             })
+//         }
+//     })
+// }
+// function uncollect(_class, id, el) {
+//     try {
+//         var deleteAct_favById = '/' + _class + '/' + id;
+//         ajaxRequest(deleteAct_favById, 'delete', '', function (ret, err) {
+//             if (ret) {
+//                 $api.html(el, "收藏");
+//                 $(el).off('click').on('click', function () {
+//                     collect(this, _class);
+//                 })
+//             } else {
+//                 api.toast({
+//                     msg: '操作失败'
+//                 })
+//             }
+//         })
+//     } catch (e) {
+//         alert(e)
+//     }
+//
+// }
 
 
 /**
@@ -297,8 +297,8 @@ function SHA1(msg) {
 }
 function ajaxRequest(url, method, bodyParam, callBack) {
     var common_url = 'https://d.apicloud.com/mcm/api';
-    var appId = 'A6981175453599';
-    var key = '1C8B38E8-627C-2F29-51FD-C09D47CA3F9A';
+    var appId = 'A6934016910596';
+    var key = 'F3E5A1A7-FFB2-B9EC-3EF3-89EEEC624B41';
     var now = Date.now();
     var appKey = SHA1(appId + "UZ" + key + "UZ" + now) + "." + now;
     api.ajax({
@@ -314,6 +314,27 @@ function ajaxRequest(url, method, bodyParam, callBack) {
         data: {
             body: bodyParam
         }
+    }, function (ret, err) {
+        callBack(ret, err);
+    });
+}
+function ajaxRequest1(url, method,  callBack) {
+    var common_url = 'https://d.apicloud.com/mcm/api';
+    var appId = 'A6934016910596';
+    var key = 'F3E5A1A7-FFB2-B9EC-3EF3-89EEEC624B41';
+    var now = Date.now();
+    var appKey = SHA1(appId + "UZ" + key + "UZ" + now) + "." + now;
+    api.ajax({
+        url: common_url + url,
+        method: method,
+        cache: false,
+        timeout: 30,
+        headers: {
+            "Content-type": "application/json;charset=UTF-8",
+            "X-APICloud-AppId": appId,
+            "X-APICloud-AppKey": appKey,
+            "authorization": $api.getStorage('token')
+        },
     }, function (ret, err) {
         callBack(ret, err);
     });

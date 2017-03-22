@@ -68,7 +68,7 @@ function ensure() {
  
  	    var getUrl='/user/count?filter=';
 	    var urlParam={
-	    	where:{username:uname}
+	    	where:{'username':uname}
 	    }
    	    ajaxRequest(getUrl + JSON.stringify(urlParam) , 'GET', '', function (ret, err) {
 	        if (ret.count>0) {
@@ -78,47 +78,13 @@ function ensure() {
 	        }else{
 		    var registerUrl = '/user';
 		    var bodyParam = {
-		        username: uname,
-		        password: pwd2,
-		        email:email,
-		        planCnt:0,
-		        doneCnt:0,
-		        cancelCnt:0,
-		        planning:false,
-		        emailVerified:true,
-		        plan:'',
-		        img:'http://7xkg7s.com1.z0.glb.clouddn.com/apicloud/75635aa0b2ddfe0bb07c53a9bc050845.png'
+		        'username': uname,
+		        'password': pwd2,
+		        'email':email,
+		        'img':'http://7xkg7s.com1.z0.glb.clouddn.com/apicloud/75635aa0b2ddfe0bb07c53a9bc050845.png'
 		    };
-		    ajaxRequest(registerUrl, 'post', JSON.stringify(bodyParam), function (ret, err) {
+		    ajaxRequest(registerUrl, 'post', bodyParam, function (ret, err) {
 		        if (ret) {
-					
-					//初始化6条贴纸内容
-					var _uid=ret.id;
-					var getUrl='/tblPlus?filter=';
-					var urlParam={where:{init:1}};
-
-			   	    ajaxRequest(getUrl + JSON.stringify(urlParam) , 'GET', '', function (ret, err) {
-				        if (ret) {	
-				        	var postUrl='/tblUserPlus';
-				        	for(var i=0,j=ret.length;i<j;i++){
-					        	
-					        	bodyParam={
-					        		user:_uid,
-					        		cid:ret[i].cid,
-					        		sid:ret[i].cid,
-					        		content:ret[i].content
-					        	}
-		    					ajaxRequest(postUrl, 'post', JSON.stringify(bodyParam), function (ret, err) {})
-				        	}
-				        }
-				    });
-					//发送邮箱验证
-		        	var verifyParam={username:uname,email:email,language:'zh_CN'};
-		        	var verifyUrl='/user/verifyEmail';
-				     ajaxRequest(verifyUrl, 'post', JSON.stringify(verifyParam), function (ret, err) {
-				          
-				     });
-				     
 		            api.alert({
 		                msg: '注册成功，登陆后就可以正常使用了！'
 		            }, function () {
@@ -138,8 +104,6 @@ function ensure() {
 }
 
 function userErr(uname){
-		
-
 	    var getUrl='/user/count?filter=';
 	    var urlParam={
 	    	where:{username:uname}

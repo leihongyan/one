@@ -20,23 +20,20 @@ function ensure() {
     var name = $api.byId('username').value;
     var pwd = $api.byId('password').value;
 
-    var loginUlr = '/user/login';
+    var loginUrl = '/user/login';
     var bodyParam = {
-        username: name,
-        password: pwd
+        'username': name,
+        'password': pwd
     }
-    ajaxRequest(loginUlr, 'post', JSON.stringify(bodyParam), function (ret, err) {
+    ajaxRequest(loginUrl, 'post', bodyParam, function (ret, err) {
         if (ret) {
-             $api.setStorage('userid', ret.userId);       	
-         
+            $api.setStorage('uid',ret.id)
             setTimeout(function () {
-
                 api.closeWin();
-                
             }, 100);
         } else {
             api.alert({
-                msg: '登录不成功'
+                msg: '请验证邮箱'
             });
         }
         api.hideProgress();
