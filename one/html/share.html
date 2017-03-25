@@ -42,12 +42,13 @@
 </head>
 <body>
     <div class="box">
+    <div class="boxlist" onclick="sharewx()">
+            <img src="../image/weixin.png">
+        </div>
         <div class="boxlist" onclick="shareqq()">
             <img src="../image/qq.png">
         </div>
-        <div class="boxlist" onclick="sharewx()">
-            <img src="../image/weixin.png">
-        </div>
+        
         <div class="boxlist" onclick="sharewb()">
             <img src="../image/weibo.png">
         </div>
@@ -95,7 +96,7 @@
                 }
                 sharewx=function(){
                     wx.shareText({
-                        apiKey: '',
+                        apiKey: 'wxc215ae3d94e53761',
                         scene: 'timeline',
                         text: data2.share_list.wx.desc
                     }, function(ret, err) {

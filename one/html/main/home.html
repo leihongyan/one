@@ -29,27 +29,6 @@
         margin:10px;
         border:1px solid #ccc;
     }
-   /* .list{
-        position:fixed;
-        top:40px;
-        left:40px;
-        width:70px;
-        height:60px;
-        border-radius:5px;
-        border:1px solid #ccc;
-        font-size:14px;
-        display: none;
-        background:#eee;
-        text-align:center;
-        z-index: 1000;
-    }
-    .list li{
-        width:100%;
-        height:30px;
-        line-height: 30px;
-        text-align: center;
-        color:#555;
-    }*/
 </style>
 <body>
 <div class="login" onclick="sign()">
@@ -98,8 +77,6 @@
 <script src="../../script/api.js"></script>
 <script src="../../script/doT.min.js"></script>
 <script src="../../script/common.js"></script>
-<script src="../../script/longtap.js"></script>
-
 <script>
     var openshare;var zan;var openWin_detail;var data2;var data3;
     apiready = function () {
@@ -184,45 +161,37 @@
     function sign(){
         //设置进入用户界面
         //用户如果是登录状态
-        var uid=$api.getStorage('uid');var img='http://7xkg7s.com1.z0.glb.clouddn.com/apicloud/75635aa0b2ddfe0bb07c53a9bc050845.png';
-        alert(uid);
-        if(uid!='undefined'){
-            loginUlr="/user/"+uid;
-
-             on(login,'longTap',function(){
-                  api.actionSheet({
-                    buttons: ['换头像', '退出登录']
-                }, function(ret, err) {
-                    var index = ret.buttonIndex;
-                    if(index==1){
-                         api.getPicture({
-                            mediaValue: 'pic',
-                            destinationType: 'url',
+        var userid=$api.getStorage('userid');var img='http://7xkg7s.com1.z0.glb.clouddn.com/apicloud/75635aa0b2ddfe0bb07c53a9bc050845.png';
+        if(userid!=' '){
+            loginUlr="/user/"+userid;
+              api.actionSheet({
+                buttons: ['换头像', '退出登录']
+            }, function(ret) {
+                var index = ret.buttonIndex;
+                if(index==1){
+                     api.getPicture({
+                        mediaValue: 'pic',
+                        destinationType: 'url',
                         allowEdit: true,
-                         quality: 50,
-                            saveToPhotoAlbum: true
-                        }, function(ret, err) {
-                            if (ret) {
-                            var img=ret.data;
-                            alert(img);
-                            if(img==""){
-                                loginimg.style.background="url('http://7xkg7s.com1.z0.glb.clouddn.com/apicloud/75635aa0b2ddfe0bb07c53a9bc050845.png') center center no-repeat";
-                            }
-                            loginimg.style.background="url("+img+") center center no-repeat";
-                            loginimg.style.backgroundSize="30px";
-                            var cc={'img':img}
-                            ajaxRequest(loginUlr, 'put',cc, function (ret) {
-                            })
+                        quality: 50,
+                        saveToPhotoAlbum: true
+                    }, function(ret, err) {
+                        var img=ret.data;
+                        if(img==""){
+                            loginimg.style.background="url('http://7xkg7s.com1.z0.glb.clouddn.com/apicloud/75635aa0b2ddfe0bb07c53a9bc050845.png') center center no-repeat";
                         }
-                        });
-                    }else if(index==2){
-                          api.openWin({
-                                 name: 'sign',
-                                 url: './sign.html',
-                           });
-                    }
-                });
-             })
+                        loginimg.style.background="url("+img+") center center no-repeat";
+                        loginimg.style.backgroundSize="30px";
+                        var cc={'img':img}
+                        ajaxRequest(loginUlr, 'put',cc,function(){});
+                    });
+                }else if(index==2){
+                      api.openWin({
+                             name: 'sign',
+                             url: './sign.html',
+                       });
+                }
+            });
         }else{
             loginimg.style.background="url("+img+") center center no-repeat";
             loginimg.style.backgroundSize="30px";

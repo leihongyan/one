@@ -27,7 +27,8 @@ function ensure() {
     }
     ajaxRequest(loginUrl, 'post', bodyParam, function (ret, err) {
         if (ret) {
-            $api.setStorage('uid',ret.id)
+            alert(JSON.stringify(ret));
+            $api.setStorage('userid',ret.userId)
             setTimeout(function () {
                 api.closeWin();
             }, 100);

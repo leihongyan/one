@@ -31,9 +31,9 @@
 	<permission name="hardware" />
 	<permission name="contact" />
 	<feature name="wx">
-		<param name="urlScheme" value="wxd0d84bbf23b4a0e4"/>
-		<param name="apiKey" value="wxd0d84bbf23b4a0e4"/>
-		<param name="apiSecret" value="a354f72aa1b4c2b8eaad137ac81434cd"/>
+		<param name="urlScheme" value="wxc215ae3d94e53761"/>
+		<param name="apiKey" value="wxc215ae3d94e53761"/>
+		<param name="apiSecret" value="e72ab7d2ae1ae89181a4bbe0b6bca6f1"/>
 	</feature>
 	<feature name="weibo">
 		<param name="urlScheme" value="wb1132217156" />
